@@ -31,11 +31,12 @@ DROP TABLE IF EXISTS Albums;
 CREATE TABLE Albums (
                         album_id INT AUTO_INCREMENT PRIMARY KEY,
                         artist_id INT NOT NULL,
-                        genre INT,
+                        genre_id INT NOT NULL,
                         album_title VARCHAR(100) NOT NULL,
                         album_description TEXT,
-                        release_date DATE,
+                        release_year YEAR,
                         FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE
+                        FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Songs;
