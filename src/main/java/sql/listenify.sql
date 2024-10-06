@@ -12,11 +12,20 @@ CREATE TABLE Users (
                        registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS Genres;
+CREATE TABLE Genres (
+                        genre_id INT AUTO_INCREMENT PRIMARY KEY,
+                        genre_name VARCHAR(50) NOT NULL UNIQUE
+);
+
 DROP TABLE IF EXISTS Artists;
 CREATE TABLE Artists (
                          artist_id INT AUTO_INCREMENT PRIMARY KEY,
-                         artist_name VARCHAR(100) NOT NULL,
-                         genre VARCHAR(50)
+                         artist_first_name VARCHAR(50) NOT NULL,
+                         artist_last_name VARCHAR(50) NOT NULL,
+                         band BOOLEAN DEFAULT FALSE,
+                         genre INT,
+                         FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
 );
 
 DROP TABLE IF EXISTS Albums;
@@ -24,6 +33,7 @@ CREATE TABLE Albums (
                         album_id INT AUTO_INCREMENT PRIMARY KEY,
                         artist_id INT NOT NULL,
                         album_title VARCHAR(100) NOT NULL,
+                        album_description TEXT,
                         release_date DATE,
                         FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE
 );
@@ -42,6 +52,7 @@ CREATE TABLE Playlists (
                            playlist_id INT AUTO_INCREMENT PRIMARY KEY,
                            user_id INT NOT NULL,
                            playlist_name VARCHAR(100) NOT NULL,
+                           playlist_description TEXT,
                            is_public BOOLEAN DEFAULT FALSE,
                            creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                            FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
