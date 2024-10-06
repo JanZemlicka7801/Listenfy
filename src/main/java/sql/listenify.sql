@@ -24,7 +24,6 @@ CREATE TABLE Artists (
                          artist_first_name VARCHAR(50) NOT NULL,
                          artist_last_name VARCHAR(50) NOT NULL,
                          band BOOLEAN DEFAULT FALSE,
-                         genre INT,
                          FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
 );
 
@@ -32,6 +31,7 @@ DROP TABLE IF EXISTS Albums;
 CREATE TABLE Albums (
                         album_id INT AUTO_INCREMENT PRIMARY KEY,
                         artist_id INT NOT NULL,
+                        genre INT,
                         album_title VARCHAR(100) NOT NULL,
                         album_description TEXT,
                         release_date DATE,
