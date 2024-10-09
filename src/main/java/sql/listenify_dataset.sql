@@ -1,3 +1,5 @@
+USE  listenify;
+
 INSERT INTO Artists (artist_first_name, artist_last_name, band, description) VALUES
                                                                                  ('Jack', 'Harlow', FALSE, 'American rapper, singer, and songwriter known for his unique blend of hip hop and pop.'),
                                                                                  ('Freddie', 'Mercury', FALSE, 'Legendary lead vocalist of the rock band Queen, known for his flamboyant stage presence.'),
@@ -147,8 +149,7 @@ INSERT INTO Songs (album_id, song_title, duration) VALUES
                                                        (53, 'Sparks', '00:03:47'),
                                                        (54, 'Lost!', '00:03:55'),
                                                        (55, 'Californication', '00:05:29'),
-                                                       (56, 'Blood Sugar Sex Magik', '00:04:31'),
-                                                       (57, 'West Sand', '00:04:28');
+                                                       (56, 'Blood Sugar Sex Magik', '00:04:31');
 
 INSERT INTO Song_Genres (song_id, genre_id) VALUES
                                                 (1, 3),
@@ -207,6 +208,5 @@ INSERT INTO Song_Genres (song_id, genre_id) VALUES
                                                 (53, 1),
                                                 (54, 1),
                                                 (55, 2),
-                                                (56, 2),
-                                                (57, 2);
+                                                (56, 2);
 
