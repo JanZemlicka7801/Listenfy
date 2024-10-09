@@ -24,7 +24,7 @@ CREATE TABLE Genres (
 DROP TABLE IF EXISTS Artists;
 CREATE TABLE Artists (
                          artist_id INT AUTO_INCREMENT PRIMARY KEY,
-                         artist_first_name VARCHAR(50) NOT NULL,
+                         artist_first_name VARCHAR(50) ,
                          artist_last_name VARCHAR(50) NOT NULL,
                          band BOOLEAN DEFAULT FALSE,
                          description TEXT
