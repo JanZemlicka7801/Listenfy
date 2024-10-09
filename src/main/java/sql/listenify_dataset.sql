@@ -91,7 +91,7 @@ INSERT INTO Albums (artist_id, album_title, album_description, release_year) VAL
                                                                                  (19, 'Stadium Arcadium', 'Double album showcasing their musical range.', 2006);
 
 
-INSERT INTO Songs (album_id, song_title, duration) V
+INSERT INTO Songs (album_id, song_title, duration) VALUES
                                                        (1, 'First Class', '00:03:22'),
                                                        (2, 'Rendezvous', '00:01:53'),
                                                        (3, 'WHATS POPPIN', '00:02:19'),
