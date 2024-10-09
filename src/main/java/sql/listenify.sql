@@ -26,8 +26,10 @@ CREATE TABLE Artists (
                          artist_id INT AUTO_INCREMENT PRIMARY KEY,
                          artist_first_name VARCHAR(50) NOT NULL,
                          artist_last_name VARCHAR(50) NOT NULL,
-                         band BOOLEAN DEFAULT FALSE
+                         band BOOLEAN DEFAULT FALSE,
+                         description TEXT
 );
+
 
 -- Albums Table
 DROP TABLE IF EXISTS Albums;
