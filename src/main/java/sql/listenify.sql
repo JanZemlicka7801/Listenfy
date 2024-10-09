@@ -18,13 +18,21 @@ CREATE TABLE Genres (
                         genre_name VARCHAR(50) NOT NULL UNIQUE
 );
 
+DROP TABLE IF EXISTS Song_Genres;
+CREATE TABLE Song_Genres (
+                             song_id INT NOT NULL,
+                             genre_id INT NOT NULL,
+                             PRIMARY KEY (song_id, genre_id),
+                             FOREIGN KEY (song_id) REFERENCES Songs(song_id) ON DELETE CASCADE,
+                             FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
+);
+
 DROP TABLE IF EXISTS Artists;
 CREATE TABLE Artists (
                          artist_id INT AUTO_INCREMENT PRIMARY KEY,
                          artist_first_name VARCHAR(50) NOT NULL,
                          artist_last_name VARCHAR(50) NOT NULL,
                          band BOOLEAN DEFAULT FALSE,
-                         FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
 );
 
 DROP TABLE IF EXISTS Albums;
@@ -36,7 +44,6 @@ CREATE TABLE Albums (
                         album_description TEXT,
                         release_year YEAR,
                         FOREIGN KEY (artist_id) REFERENCES Artists(artist_id) ON DELETE CASCADE
-                        FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Songs;
