@@ -18,15 +18,6 @@ CREATE TABLE Genres (
                         genre_name VARCHAR(50) NOT NULL UNIQUE
 );
 
-DROP TABLE IF EXISTS Song_Genres;
-CREATE TABLE Song_Genres (
-                             song_id INT NOT NULL,
-                             genre_id INT NOT NULL,
-                             PRIMARY KEY (song_id, genre_id),
-                             FOREIGN KEY (song_id) REFERENCES Songs(song_id) ON DELETE CASCADE,
-                             FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
-);
-
 DROP TABLE IF EXISTS Artists;
 CREATE TABLE Artists (
                          artist_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,6 +44,15 @@ CREATE TABLE Songs (
                        song_title VARCHAR(100) NOT NULL,
                        duration TIME,
                        FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS Song_Genres;
+CREATE TABLE Song_Genres (
+                             song_id INT NOT NULL,
+                             genre_id INT NOT NULL,
+                             PRIMARY KEY (song_id, genre_id),
+                             FOREIGN KEY (song_id) REFERENCES Songs(song_id) ON DELETE CASCADE,
+                             FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Playlists;
