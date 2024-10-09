@@ -150,61 +150,62 @@ INSERT INTO Songs (album_id, song_title, duration) VALUES
                                                        (57, 'West Sand', '00:04:28');
 
 INSERT INTO Song_Genres (song_id, genre_id) VALUES
-                                                (1, 3),  -- 'First Class' (Hip Hop)
-                                                (1, 1),  -- 'First Class' (Pop)
-                                                (2, 3),  -- 'Rendezvous' (Hip Hop)
-                                                (3, 3),  -- 'WHATS POPPIN' (Hip Hop)
-                                                (4, 2),  -- 'Love Of My Life' (Rock)
-                                                (5, 2),  -- 'We Will Rock You' (Rock)
-                                                (6, 2),  -- 'Play The Game' (Rock)
-                                                (7, 2),  -- 'Paranoid' (Rock)
-                                                (8, 3),  -- 'Circles' (Hip Hop)
-                                                (9, 3),  -- 'Go Flex' (Hip Hop)
-                                                (10, 3), -- 'Perfecto' (Hip Hop)
-                                                (11, 3), -- 'Weekend' (Hip Hop)
-                                                (12, 3), -- 'Congratulations' (Hip Hop)
-                                                (13, 1), -- 'xanny' (Pop)
-                                                (14, 1), -- 'COPYCAT' (Pop)
-                                                (15, 1), -- 'NDA' (Pop)
-                                                (16, 2), -- 'Breed' (Rock)
-                                                (17, 2), -- 'Dumb' (Rock)
-                                                (18, 2), -- 'Blew' (Rock)
-                                                (19, 3), -- 'Mansion' (Hip Hop)
-                                                (20, 3), -- 'Faith' (Hip Hop)
-                                                (21, 1), -- 'Feels' (Pop)
-                                                (22, 6), -- 'Titanium' (Electronic)
-                                                (23, 6), -- 'Listen' (Electronic)
-                                                (24, 6), -- 'Flames' (Electronic)
-                                                (25, 1), -- 'Levitating' (Pop)
-                                                (26, 1), -- 'Genesis' (Pop)
-                                                (27, 1), -- 'Cool' (Pop)
-                                                (28, 1), -- 'Cheyenne' (Pop)
-                                                (29, 1), -- 'What If' (Pop)
-                                                (30, 1), -- 'Be The One' (Pop)
-                                                (31, 3), -- 'No Idea' (Hip Hop)
-                                                (32, 3), -- 'Way Bigger' (Hip Hop)
-                                                (33, 3), -- 'Flocky Flocky' (Hip Hop)
-                                                (34, 3), -- 'Overdue' (Hip Hop)
-                                                (35, 3), -- 'Runnin' (Hip Hop)
-                                                (36, 3), -- 'So Good' (Hip Hop)
-                                                (37, 3), -- 'ATM' (Hip Hop)
-                                                (38, 3), -- 'No Role Modelz' (Hip Hop)
-                                                (39, 3), -- 'a m a r i' (Hip Hop)
-                                                (40, 3), -- 'YOSEMITE' (Hip Hop)
-                                                (41, 3), -- 'Wasted' (Hip Hop)
-                                                (42, 3), -- 'the ends' (Hip Hop)
-                                                (43, 1), -- 'Love Runs Out' (Pop)
-                                                (44, 1), -- 'Made For You' (Pop)
-                                                (45, 1), -- 'Wherever I Go' (Pop)
-                                                (46, 2), -- 'Fixing A Hole' (Rock)
-                                                (47, 2), -- 'Come Together' (Rock)
-                                                (48, 2), -- 'Love You To' (Rock)
-                                                (49, 2), -- 'Numb' (Rock)
-                                                (50, 2), -- 'In The End' (Rock)
-                                                (51, 2), -- 'No More Sorrow' (Rock)
-                                                (52, 1), -- 'Clocks' (Pop)
-                                                (53, 1), -- 'Sparks' (Pop)
-                                                (54, 1), -- 'Lost!' (Pop)
-                                                (55, 2), -- 'Californication' (Rock)
-                                                (56, 2), -- 'Blood Sugar Sex Magik' (Rock)
-                                                (57, 2); -- 'West Sand' (Rock)
+                                                (1, 3),
+                                                (1, 1),
+                                                (2, 3),
+                                                (3, 3),
+                                                (4, 2),
+                                                (5, 2),
+                                                (6, 2),
+                                                (7, 2),
+                                                (8, 3),
+                                                (9, 3),
+                                                (10, 3),
+                                                (11, 3),
+                                                (12, 3),
+                                                (13, 1),
+                                                (14, 1),
+                                                (15, 1),
+                                                (16, 2),
+                                                (17, 2),
+                                                (18, 2),
+                                                (19, 3),
+                                                (20, 3),
+                                                (21, 1),
+                                                (22, 6),
+                                                (23, 6),
+                                                (24, 6),
+                                                (25, 1),
+                                                (26, 1),
+                                                (27, 1),
+                                                (28, 1),
+                                                (29, 1),
+                                                (30, 1),
+                                                (31, 3),
+                                                (32, 3),
+                                                (33, 3),
+                                                (34, 3),
+                                                (35, 3),
+                                                (36, 3),
+                                                (37, 3),
+                                                (38, 3),
+                                                (39, 3),
+                                                (40, 3),
+                                                (41, 3),
+                                                (42, 3),
+                                                (43, 1),
+                                                (44, 1),
+                                                (45, 1),
+                                                (46, 2),
+                                                (47, 2),
+                                                (48, 2),
+                                                (49, 2),
+                                                (50, 2),
+                                                (51, 2),
+                                                (52, 1),
+                                                (53, 1),
+                                                (54, 1),
+                                                (55, 2),
+                                                (56, 2),
+                                                (57, 2);
+
