@@ -1,12 +1,10 @@
 package business;
 
 import lombok.*;
-
 import java.time.LocalDate;
-import java.util.Objects;
-
 
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
