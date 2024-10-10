@@ -7,7 +7,10 @@ import java.util.List;
 
 public class UserDaoImpl extends MySQLDao implements UserDao {
     public UserDaoImpl(String dbName){
-
+        super(dbName);
+    }
+    public UserDaoImpl(){
+        super();
     }
     @Override
     public List<User> getAllUsers() throws SQLException {

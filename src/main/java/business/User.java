@@ -19,10 +19,18 @@ public class User {
     //                       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     //);
     @EqualsAndHashCode.Include
+    @NonNull
     private int userId;
     private String username;
     private String password;
     private String email;
     private LocalDate registrationDate;
 
+    public User(String username, String password, String email, LocalDate registrationDate) {
+        userId = 0;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.registrationDate = registrationDate;
+    }
 }
