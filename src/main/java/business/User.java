@@ -1,8 +1,13 @@
 package business;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Getter
+@Setter
 public class User {
     //CREATE TABLE Users (
     //                       user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,6 +23,7 @@ public class User {
     private String email;
     private LocalDate registrationDate;
 
+
     public User() {
     }
 
@@ -26,46 +32,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.registrationDate = registrationDate;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
