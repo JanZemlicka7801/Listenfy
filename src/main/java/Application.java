@@ -8,5 +8,6 @@ public class Application {
         Extentions.welcome();
 
         Extentions.menu();
+
     }
 }
