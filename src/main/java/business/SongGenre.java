@@ -19,5 +19,6 @@ public class SongGenre {
     //);
     @EqualsAndHashCode.Include
     private int genreId;
+    @EqualsAndHashCode.Include
     private int songId;
 }

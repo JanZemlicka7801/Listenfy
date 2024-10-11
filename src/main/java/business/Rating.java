@@ -20,6 +20,7 @@ public class Rating {
     //);
     @EqualsAndHashCode.Include
     private int userId;
+    @EqualsAndHashCode.Include
     private int songId;
     private int rating;
 }

@@ -23,4 +23,11 @@ public class Song {
     private int albumId;
     private String songTitle;
     private Time duration;
+
+    public Song(int albumId, String songTitle, Time duration) {
+        songId = 0;
+        this.albumId = albumId;
+        this.songTitle = songTitle;
+        this.duration = duration;
+    }
 }

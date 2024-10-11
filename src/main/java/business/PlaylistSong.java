@@ -19,5 +19,6 @@ public class PlaylistSong {
     //);
     @EqualsAndHashCode.Include
     private int playlistId;
+    @EqualsAndHashCode.Include
     private int songId;
 }

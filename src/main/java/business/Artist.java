@@ -18,9 +18,18 @@ public class Artist {
     //                         description TEXT
     //);
     @EqualsAndHashCode.Include
+    @NonNull
     private int artistId;
     private String artistFirstName;
     private String artistLastName;
     private boolean band;
     private String description;
+
+    public Artist(String artistFirstName, String artistLastName, boolean band, String description) {
+        artistId = 0;
+        this.artistFirstName = artistFirstName;
+        this.artistLastName = artistLastName;
+        this.band = band;
+        this.description = description;
+    }
 }
