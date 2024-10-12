@@ -70,6 +70,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             stmt = conn.prepareStatement(query);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());  // Ideally, password should be hashed
+            //TODO need to add hashing to password, unsafe as is
             stmt.setString(3, user.getEmail());
             stmt.setDate(4, java.sql.Date.valueOf(user.getRegistrationDate()));
 
