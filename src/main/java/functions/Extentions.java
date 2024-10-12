@@ -1,11 +1,18 @@
 package functions;
 
+import business.User;
+import persistence.UserDaoImpl;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Extentions {
 
     static String answer = "";
     static Scanner sc = new Scanner(System.in);
+
+    static UserDaoImpl userDao = new UserDaoImpl();
 
     public static void welcome() {
         System.out.println("Welcome to a brand new and best music storing platform in the world Listenfy! \n" +
@@ -32,13 +39,13 @@ public class Extentions {
         answer = sc.next();
         switch (answer){
             case "1":
-                // log in logic
+                login();
                 break;
             case "2":
-                // sign up logic
+                register();
                 break;
             case "3":
-                // log out logic
+                System.exit(0);
                 break;
             default:
                 System.out.println("Not a valid option!\n" +
@@ -46,4 +53,60 @@ public class Extentions {
                 break;
         }
     }}
+
+    public static void login() {
+        System.out.print("Enter username: ");
+        String username = sc.next();
+
+        System.out.print("Enter password: ");
+        String password = sc.next();
+
+        try {
+            User user = userDao.login(username, password);
+            if (user != null) {
+                System.out.println("Login successful! Welcome, " + user.getUsername());
+            } else {
+                System.out.println("Invalid username or password.");
+            }
+        } catch (SQLException e) {
+            System.out.println("An error occurred during login.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void register() {
+        System.out.print("Enter a username: ");
+        String username = sc.next();
+
+        System.out.print("Enter a password: ");
+        String password = sc.next();
+
+        System.out.print("Enter an email: ");
+        String email = sc.next();
+
+        System.out.print("Enter your credit card number: ");
+        String creditCard = sc.next();
+
+        if (!cardService.cardRegister(creditCard)) {
+            System.out.println("Invalid credit card. Registration failed.");
+            return;
+        }
+
+        User newUser = new User(username, password, email, LocalDate.now());
+
+        try {
+            boolean success = userDao.register(newUser);
+            if (success) {
+                System.out.println("Registration successful! You can now log in.");
+            } else {
+                System.out.println("Registration failed.");
+            }
+        } catch (SQLException e) {
+            System.out.println("An error occurred during registration.");
+            e.printStackTrace();
+        }
+    }
 }
+
+
+
