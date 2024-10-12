@@ -41,11 +41,11 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
 
             if (rs.next()){
                 user = new User(
-                        rs.getInt("user_id"),
+                        rs.getInt("userId"),
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("email"),
-                        rs.getTimestamp("registration_date").toLocalDateTime().toLocalDate());
+                        rs.getTimestamp("registrationDate").toLocalDateTime().toLocalDate());
             }
         }finally {
             if (rs != null) rs.close();
