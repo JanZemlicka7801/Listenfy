@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface UserDao {
     public User login(String username, String password) throws SQLException;
+    boolean register(User user) throws SQLException;
     List<User> getAllUsers() throws SQLException;
 }

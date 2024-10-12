@@ -54,4 +54,29 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         }
         return user;
     }
+
+    @Override
+    public boolean register(User user) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                throw new SQLException("Unable to connect to the database!");
+            }
+
+            String query = "INSERT INTO Users (username, password, email, registration_date) VALUES (?, ?, ?, ?)";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());  // Ideally, password should be hashed
+            stmt.setString(3, user.getEmail());
+            stmt.setDate(4, java.sql.Date.valueOf(user.getRegistrationDate()));
+
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
 }
