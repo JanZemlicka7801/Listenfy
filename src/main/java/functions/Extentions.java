@@ -92,12 +92,20 @@ public class Extentions {
         System.out.print("Enter your credit card number: ");
         String creditCard = sc.next();
 
+        String salt = "";
+        try {
+            salt = PasswordHash.generateSalt();
+            password = PasswordHash.hashPassword(password, salt);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+
         if (!cardService.cardRegister(creditCard)) {
             System.out.println("Invalid credit card. Registration failed.");
             return;
         }
 
-        User newUser = new User(username, password, email, LocalDate.now());
+        User newUser = new User(username, password, salt, email, LocalDate.now());
 
         try {
             boolean success = userDao.register(newUser);

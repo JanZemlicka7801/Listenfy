@@ -24,13 +24,15 @@ public class User {
     private String username;
     @ToString.Exclude
     private String password;
+    private String salt;
     private String email;
     private LocalDate registrationDate;
 
-    public User(String username, String password, String email, LocalDate registrationDate) {
+    public User(String username, String password, String salt, String email, LocalDate registrationDate) {
         userId = 0;
         this.username = username;
         this.password = password;
+        this.salt = salt;
         this.email = email;
         this.registrationDate = registrationDate;
     }

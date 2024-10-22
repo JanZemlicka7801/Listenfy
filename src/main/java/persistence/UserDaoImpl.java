@@ -47,6 +47,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                             rs.getInt("user_id"),
                             rs.getString("username"),
                             storedHashedPassword,
+                            storedSalt,
                             rs.getString("email"),
                             rs.getTimestamp("registration_date").toLocalDateTime().toLocalDate()
                     );
