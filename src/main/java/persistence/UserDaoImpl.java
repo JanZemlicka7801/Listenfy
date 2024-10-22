@@ -1,11 +1,11 @@
 package persistence;
 
 import business.User;
+import functions.PasswordHash;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,34 +21,41 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         return null;
     }
     @Override
-    public User login(String username, String password) throws SQLException {
+    public User login(String username, String password) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         User user = null;
 
         try {
-            conn=getConnection();
-            if (conn == null){
-                throw new SQLException("Unable to connect to database!");
+            conn = getConnection();
+            if (conn == null) {
+                throw new SQLException("Unable to connect to the database!");
             }
 
-            String query = "SELECT * FROM Users WHERE username = ? AND password = ?";
+            String query = "SELECT * FROM Users WHERE username = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, username);
-            stmt.setString(2, password);
+            rs = stmt.executeQuery();
 
-            rs = stmt.executeQuery();;
+            if (rs.next()) {
+                String storedHashedPassword = rs.getString("password");
+                String storedSalt = rs.getString("salt");
 
-            if (rs.next()){
-                user = new User(
-                        rs.getInt("userId"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getTimestamp("registrationDate").toLocalDateTime().toLocalDate());
+                if (PasswordHash.verifyPassword(password, storedSalt, storedHashedPassword)) {
+                    user = new User(
+                            rs.getInt("user_id"),
+                            rs.getString("username"),
+                            storedHashedPassword,
+                            rs.getString("email"),
+                            rs.getTimestamp("registration_date").toLocalDateTime().toLocalDate()
+                    );
+                } else {
+                    System.out.println("Invalid username or password.");
+                }
             }
-        }finally {
+
+        } finally {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
             if (conn != null) conn.close();
@@ -57,7 +64,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
     }
 
     @Override
-    public boolean register(User user) throws SQLException {
+    public boolean register(User user) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -67,13 +74,17 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 throw new SQLException("Unable to connect to the database!");
             }
 
-            String query = "INSERT INTO Users (username, password, email, registration_date) VALUES (?, ?, ?, ?)";
+            String salt = PasswordHash.generateSalt();
+
+            String hashedPassword = PasswordHash.hashPassword(user.getPassword(), salt);
+
+            String query = "INSERT INTO Users (username, password, salt, email, registration_date) VALUES (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());  // Ideally, password should be hashed
-            //TODO need to add hashing to password, unsafe as is
-            stmt.setString(3, user.getEmail());
-            stmt.setDate(4, java.sql.Date.valueOf(user.getRegistrationDate()));
+            stmt.setString(2, hashedPassword);
+            stmt.setString(3, salt);
+            stmt.setString(4, user.getEmail());
+            stmt.setDate(5, Date.valueOf(user.getRegistrationDate()));
 
             return stmt.executeUpdate() > 0;
         } finally {

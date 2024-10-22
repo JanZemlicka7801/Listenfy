@@ -2,11 +2,14 @@ package persistence;
 
 import business.User;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
-    public User login(String username, String password) throws SQLException;
-    boolean register(User user) throws SQLException;
+    public User login(String username, String password) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException;
+    boolean register(User user) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException;
     List<User> getAllUsers() throws SQLException;
 }

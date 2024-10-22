@@ -36,6 +36,7 @@ public class MySQLDao {
      * @author Seb Mathews-Lynch
      */
     public Connection getConnection(){
+
         // Retrieve database connection properties
         String driver = properties.getProperty("driver");
         String url = properties.getProperty("url");

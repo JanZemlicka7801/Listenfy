@@ -1,8 +1,11 @@
 package functions;
 
 import business.User;
+import persistence.UserDao;
 import persistence.UserDaoImpl;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -12,7 +15,7 @@ public class Extentions {
     static String answer = "";
     static Scanner sc = new Scanner(System.in);
 
-    static UserDaoImpl userDao = new UserDaoImpl();
+    static UserDao userDao = new UserDaoImpl("database.properties");
 
     public static void welcome() {
         System.out.println("Welcome to a brand new and best music storing platform in the world Listenfy! \n" +
@@ -71,6 +74,8 @@ public class Extentions {
         } catch (SQLException e) {
             System.out.println("An error occurred during login.");
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -104,6 +109,8 @@ public class Extentions {
         } catch (SQLException e) {
             System.out.println("An error occurred during registration.");
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
         }
     }
 }
