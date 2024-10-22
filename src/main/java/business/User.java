@@ -22,6 +22,7 @@ public class User {
     @NonNull
     private int userId;
     private String username;
+    @ToString.Exclude
     private String password;
     private String email;
     private LocalDate registrationDate;

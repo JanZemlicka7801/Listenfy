@@ -41,10 +41,8 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
             String query = "SELECT * FROM artists";
             pstmt = conn.prepareStatement(query);
 
-            // Execute the query
             rs = pstmt.executeQuery();
 
-            // Process the result set and create Artist objects
             while (rs.next()) {
                 Artist dbArtist = new Artist(
                         rs.getInt("artist_id"),
@@ -59,7 +57,6 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
             System.out.println("Error while fetching artists: " + e.getMessage());
             e.printStackTrace();
         } finally {
-            // Close ResultSet, PreparedStatement, and Connection
             if (rs != null) rs.close();
             if (pstmt != null) pstmt.close();
             if (conn != null) conn.close();
