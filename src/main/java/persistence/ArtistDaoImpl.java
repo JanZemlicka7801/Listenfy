@@ -33,7 +33,7 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
         List<Artist> artList = new ArrayList<>();
 
         try {
-            conn = getConnection();
+            conn = super.getConnection();
             if (conn == null) {
                 throw new SQLException("Can not connect to database");
             }
