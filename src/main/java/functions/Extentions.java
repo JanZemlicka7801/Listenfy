@@ -68,6 +68,8 @@ public class Extentions {
             User user = userDao.login(username, password);
             if (user != null) {
                 System.out.println("Login successful! Welcome, " + user.getUsername());
+                MainMenu mainMenu = new MainMenu(user, sc);
+                mainMenu.displayMenu();
             } else {
                 System.out.println("Invalid username or password.");
             }
@@ -92,20 +94,13 @@ public class Extentions {
         System.out.print("Enter your credit card number: ");
         String creditCard = sc.next();
 
-        String salt = "";
-        try {
-            salt = PasswordHash.generateSalt();
-            password = PasswordHash.hashPassword(password, salt);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
 
         if (!cardService.cardRegister(creditCard)) {
             System.out.println("Invalid credit card. Registration failed.");
             return;
         }
 
-        User newUser = new User(username, password, salt, email, LocalDate.now());
+        User newUser = new User(username, password, "", email, LocalDate.now());
 
         try {
             boolean success = userDao.register(newUser);

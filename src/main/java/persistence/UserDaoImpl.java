@@ -10,16 +10,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class UserDaoImpl extends MySQLDao implements UserDao {
-    public UserDaoImpl(String dbName){
+    public UserDaoImpl(String dbName) {
         super(dbName);
     }
-    public UserDaoImpl(){
+
+    public UserDaoImpl() {
         super();
     }
+
     @Override
     public List<User> getAllUsers() throws SQLException {
         return null;
     }
+
     @Override
     public User login(String username, String password) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection conn = null;
@@ -39,23 +42,21 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String storedHashedPassword = rs.getString("password");
+                String storedHash = rs.getString("password");
                 String storedSalt = rs.getString("salt");
+                String computedHash = PasswordHash.hashPassword(password, storedSalt);
 
-                if (PasswordHash.verifyPassword(password, storedSalt, storedHashedPassword)) {
+                if (computedHash.equals(storedHash)) {
                     user = new User(
                             rs.getInt("user_id"),
                             rs.getString("username"),
-                            storedHashedPassword,
+                            storedHash,
                             storedSalt,
                             rs.getString("email"),
-                            rs.getTimestamp("registration_date").toLocalDateTime().toLocalDate()
+                            rs.getDate("registration_date").toLocalDate()
                     );
-                } else {
-                    System.out.println("Invalid username or password.");
                 }
             }
-
         } finally {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
@@ -75,8 +76,16 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 throw new SQLException("Unable to connect to the database!");
             }
 
-            String salt = PasswordHash.generateSalt();
+            String checkQuery = "SELECT COUNT(*) FROM Users WHERE username = ?";
+            stmt = conn.prepareStatement(checkQuery);
+            stmt.setString(1, user.getUsername());
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            if (rs.getInt(1) > 0) {
+                return false;
+            }
 
+            String salt = PasswordHash.generateSalt();
             String hashedPassword = PasswordHash.hashPassword(user.getPassword(), salt);
 
             String query = "INSERT INTO Users (username, password, salt, email, registration_date) VALUES (?, ?, ?, ?, ?)";
@@ -85,7 +94,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             stmt.setString(2, hashedPassword);
             stmt.setString(3, salt);
             stmt.setString(4, user.getEmail());
-            stmt.setDate(5, Date.valueOf(user.getRegistrationDate()));
+            stmt.setDate(5, Date.valueOf(LocalDate.now()));
 
             return stmt.executeUpdate() > 0;
         } finally {
