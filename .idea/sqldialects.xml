@@ -3,5 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/sql/listenify.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/sql/listenify_dataset.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/sql/test_listenify.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/sql/test_listenify_dataset.sql" dialect="MySQL" />
   </component>
 </project>
