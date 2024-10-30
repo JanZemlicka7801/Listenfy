@@ -140,8 +140,8 @@ public class DaoExtentions {
             return;
         }
 
-        Integer albumId = albumDao.getAlbumIdByAlbumTitle(albumTitle);
-        if (albumId == null) {
+        int albumId = albumDao.getAlbumIdByAlbumTitle(albumTitle);
+        if (albumId == -1) {
             System.out.println("No album found with the title: " + albumTitle);
             return;
         }
