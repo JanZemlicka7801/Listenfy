@@ -79,6 +79,37 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
         return albumsList;
     }
 
+    /**
+     * Retrieves the album ID based on the album title.
+     *
+     * @param albumTitle The title of the album to search for.
+     * @return The album ID if found; -1 if no matching album exists.
+     */
+    public int getAlbumIdByAlbumTitle(String albumTitle) {
+        int albumId = -1;
+        String query = "SELECT album_id FROM albums WHERE album_title = ?";
+        Connection conn = super.getConnection();
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    albumId = rs.getInt("album_id");
+                }
+            } catch (SQLException e) {
+                System.out.println(LocalDateTime.now() + ": SQLException occurred while processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(LocalDateTime.now() + ": SQLException occurred while preparing the SQL statement.");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return albumId;
+    }
+
     public static void main(String[] args) {
         //for testing
         AlbumsDao ab = new AlbumDaoImpl("database.properties");
