@@ -49,7 +49,7 @@ public class MainMenu {
                     DaoExtentions.viewAllSongsInAlbum();
                     break;
                 case "4":
-                    DaoExtentions.searchForSongViaTitle();
+                    searchForSong();
                     break;
                 case "5":
                     handlePlaylistMenu();
