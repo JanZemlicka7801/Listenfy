@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface PlaylistDao {
+    //done by Omer
     boolean createPlaylist(int userId, String name, boolean isPublic) throws SQLException;
     boolean renamePlaylist(int playlistId, String newName) throws SQLException;
     List<Playlist> getUserPlaylists(int userId) throws SQLException;

@@ -7,12 +7,27 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//done by Omer
 public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
 
+    /**
+     * Creates a new PlaylistDaoImpl instance.
+     *
+     * @param dbName Name of the database properties file
+     */
     public PlaylistDaoImpl(String dbName) {
         super(dbName);
     }
 
+    /**
+     * Creates a new playlist.
+     *
+     * @param userId ID of user creating playlist
+     * @param name Name of the playlist
+     * @param isPublic Whether playlist is public or private
+     * @return true if creation successful
+     * @throws SQLException if database error occurs
+     */
     @Override
     public boolean createPlaylist(int userId, String name, boolean isPublic) throws SQLException {
         Connection conn = getConnection();
@@ -28,6 +43,14 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         }
     }
 
+    /**
+     * Renames an existing playlist.
+     *
+     * @param playlistId ID of playlist to rename
+     * @param newName New name for playlist
+     * @return true if rename successful
+     * @throws SQLException if database error occurs
+     */
     @Override
     public boolean renamePlaylist(int playlistId, String newName) throws SQLException {
         Connection conn = getConnection();
@@ -42,6 +65,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         }
     }
 
+    /**
+     * Gets all playlists owned by a user.
+     *
+     * @param userId ID of user
+     * @return List of user's playlists
+     * @throws SQLException if database error occurs
+     */
     @Override
     public List<Playlist> getUserPlaylists(int userId) throws SQLException {
         Connection conn = getConnection();
@@ -66,6 +96,12 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         return playlists;
     }
 
+    /**
+     * Gets all public playlists in the system.
+     *
+     * @return List of public playlists
+     * @throws SQLException if database error occurs
+     */
     @Override
     public List<Playlist> getPublicPlaylists() throws SQLException {
         Connection conn = getConnection();
@@ -89,6 +125,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         return playlists;
     }
 
+    /**
+     * Finds playlist by its name.
+     *
+     * @param name Name of playlist to find
+     * @return Playlist if found, null if not found
+     * @throws SQLException if database error occurs
+     */
     @Override
     public Playlist getPlaylistByName(String name) throws SQLException {
         Connection conn = getConnection();
@@ -112,7 +155,14 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         return null;
     }
 
-
+    /**
+     * Adds a song to a playlist.
+     *
+     * @param playlistId ID of playlist
+     * @param songId ID of song to add
+     * @return true if song added successfully
+     * @throws SQLException if database error occurs
+     */
     @Override
     public boolean addSongToPlaylist(int playlistId, int songId) throws SQLException {
         Connection conn = getConnection();
@@ -127,6 +177,14 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         }
     }
 
+    /**
+     * Removes a song from a playlist.
+     *
+     * @param playlistId ID of playlist
+     * @param songId ID of song to remove
+     * @return true if song removed successfully
+     * @throws SQLException if database error occurs
+     */
     @Override
     public boolean removeSongFromPlaylist(int playlistId, int songId) throws SQLException {
         Connection conn = getConnection();
@@ -141,6 +199,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         }
     }
 
+    /**
+     * Gets all songs in a playlist.
+     *
+     * @param playlistId ID of playlist
+     * @return List of songs in playlist
+     * @throws SQLException if database error occurs
+     */
     @Override
     public List<Song> getPlaylistSongs(int playlistId) throws SQLException {
         Connection conn = getConnection();
@@ -169,6 +234,14 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         return songs;
     }
 
+    /**
+     * Checks if user owns playlist.
+     *
+     * @param playlistId ID of playlist
+     * @param userId ID of user
+     * @return true if user owns playlist
+     * @throws SQLException if database error occurs
+     */
     @Override
     public boolean isPlaylistOwner(int playlistId, int userId) throws SQLException {
         Connection conn = getConnection();
@@ -184,6 +257,15 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         }
     }
 
+    /**
+     * Checks if user can access playlist.
+     * User can access if they own it or if it's public.
+     *
+     * @param playlistId ID of playlist
+     * @param userId ID of user
+     * @return true if user can access playlist
+     * @throws SQLException if database error occurs
+     */
     @Override
     public boolean canUserAccessPlaylist(int playlistId, int userId) throws SQLException {
         Connection conn = getConnection();

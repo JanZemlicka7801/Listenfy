@@ -61,6 +61,14 @@ public class Extentions {
         }
     }
 
+    /**
+     * Handles the user login process for Listenfy music platform.
+     * Prompts user for username and password, validates against database,
+     * and navigates to main menu if successful.
+     *
+     * @throws RuntimeException If there is an error with password hashing
+     * @author Malikom12
+     */
     public static void login() {
         System.out.print("Enter username: ");
         String username = sc.next();
