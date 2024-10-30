@@ -34,28 +34,31 @@ public class Extentions {
     }
 
     public static void menu() {
-        while(true) {
-        System.out.println("Please select an option:\n" +
-                "1. Sign in\n" +
-                "2. Register\n" +
-                "3. Exit\n");
-        answer = sc.next();
-        switch (answer){
-            case "1":
-                login();
-                break;
-            case "2":
-                register();
-                break;
-            case "3":
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Not a valid option!\n" +
-                        "Please select a valid option again.\n");
-                break;
+        while (true) {
+            System.out.println("Please select an option:\n" +
+                    "1. Sign in\n" +
+                    "2. Register\n" +
+                    "3. Exit\n");
+
+            answer = sc.nextLine().trim();
+
+            switch (answer) {
+                case "1":
+                    login();
+                    break;
+                case "2":
+                    register();
+                    break;
+                case "3":
+                    System.out.println("Exiting program.");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Not a valid option! Please select a valid option again.");
+                    break;
+            }
         }
-    }}
+    }
 
     public static void login() {
         System.out.print("Enter username: ");
@@ -83,16 +86,16 @@ public class Extentions {
 
     public static void register() {
         System.out.print("Enter a username: ");
-        String username = sc.next();
+        String username = sc.nextLine().trim();
 
         System.out.print("Enter a password: ");
-        String password = sc.next();
+        String password = sc.nextLine().trim();
 
         System.out.print("Enter an email: ");
-        String email = sc.next();
+        String email = sc.nextLine().trim();
 
         System.out.print("Enter your credit card number: ");
-        String creditCard = sc.next();
+        String creditCard = sc.nextLine().trim();
 
 
         if (!cardService.cardRegister(creditCard)) {
