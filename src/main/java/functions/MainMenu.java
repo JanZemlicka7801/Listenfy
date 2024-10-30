@@ -27,7 +27,7 @@ public class MainMenu {
             System.out.println("1. View all artists");
             System.out.println("2. View artist albums");
             System.out.println("3. View album songs");
-            System.out.println("4. Search songs");
+            System.out.println("4. Search for songs");
             System.out.println("5. Playlist Management");
             System.out.println("6. Song Ratings");
             System.out.println("7. Logout");
@@ -159,6 +159,17 @@ public class MainMenu {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
+        }
+    }
+    private void searchForSong(){
+        while (true){
+            System.out.println("\n=== SEARCH MENU ===");
+            System.out.println("1. Rate a song");
+            System.out.println("2. View your rated songs");
+            System.out.println("3. View top-rated song");
+            System.out.println("4. View most popular song");
+            System.out.println("5. Return to main menu");
+            System.out.print("\nEnter your choice: ");
         }
     }
 }

@@ -21,10 +21,12 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
     }
 
     /**
+     * Retrieves a list of albums by the given artist's first and last names.
      *
-     * @param artistFirstName
-     * @param artistLastName
-     * @return
+     * @param artistFirstName The first name of the artist (can be null or empty).
+     * @param artistLastName The last name of the artist (must not be null).
+     * @return A list of albums associated with the specified artist.
+     * @author Seb Mathews-Lynch
      */
     @Override
     public List<Albums> getAlbumsByArtistName(String artistFirstName, String artistLastName) {
@@ -80,10 +82,11 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
     }
 
     /**
-     * Retrieves the album ID based on the album title.
+     * Retrieves the album ID based on the album title. Used for SongDao
      *
      * @param albumTitle The title of the album to search for.
      * @return The album ID if found; -1 if no matching album exists.
+     * @auther Seb Mathews-Lynch
      */
     public int getAlbumIdByAlbumTitle(String albumTitle) {
         int albumId = -1;

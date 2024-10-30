@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SongDao {
     List<Song> getAllSongsByAlbumId(int albumId);
+    List<Song> getSongsByTitle(String title);
 }
