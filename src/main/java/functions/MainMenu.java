@@ -55,7 +55,7 @@ public class MainMenu {
                     DaoExtentions.viewAllSongsInAlbum();
                     break;
                 case "4":
-                    //TODO Later
+                    searchForSong();
                     break;
                 case "5":
                     handlePlaylistMenu();
