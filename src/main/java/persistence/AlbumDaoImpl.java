@@ -91,6 +91,7 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
         Connection conn = super.getConnection();
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, albumTitle);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     albumId = rs.getInt("album_id");

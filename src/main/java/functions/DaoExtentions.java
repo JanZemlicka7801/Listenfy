@@ -43,7 +43,7 @@ public class DaoExtentions {
     }
     public static void viewAllSongsInAlbum(){
         Scanner scanner = new Scanner(System.in);
-        AlbumDaoImpl albumDao = new AlbumDaoImpl("database.properties");
+        AlbumsDao albumDao = new AlbumDaoImpl("database.properties");
         SongDao songDao = new SongDaoImpl("database.properties");
 
         String albumTitle;
@@ -77,7 +77,5 @@ public class DaoExtentions {
         } else {
             System.out.println("Album titled \"" + albumTitle + "\" not found.");
         }
-
-        scanner.close();
     }
 }
