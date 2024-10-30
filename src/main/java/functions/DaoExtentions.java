@@ -102,4 +102,36 @@ public class DaoExtentions {
                     ", Duration: " + song.getDuration());
         }
     }
+    public static void searchForSongsByAlbum() {
+        SongDao songDao = new SongDaoImpl("database.properties");
+        AlbumsDao albumDao = new AlbumDaoImpl("database.properties");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the album title to search songs: ");
+        String albumTitle = sc.nextLine().trim();
+
+        if (albumTitle.isEmpty()) {
+            System.out.println("Album title cannot be empty. Please enter a valid title.");
+            return;
+        }
+
+        Integer albumId = albumDao.getAlbumIdByAlbumTitle(albumTitle);
+        if (albumId == null) {
+            System.out.println("No album found with the title: " + albumTitle);
+            return;
+        }
+
+        List<Song> songs = songDao.getAllSongsByAlbumId(albumId);
+
+        if (songs.isEmpty()) {
+            System.out.println("No songs found in the album: " + albumTitle);
+        } else {
+            System.out.println("Songs in the album '" + albumTitle + "':");
+            for (Song song : songs) {
+                System.out.println("Song ID: " + song.getSongId() +
+                        ", Title: " + song.getSongTitle() +
+                        ", Duration: " + song.getDuration());
+            }
+        }
+    }
 }
