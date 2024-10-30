@@ -36,8 +36,8 @@ class cardServiceTest {
     @Test
     public void isBrandMaster_InvalidMasterCard() {
         assertFalse(cardService.isBrandMaster("1111111111111111"));
-        assertFalse(cardService.isBrandMaster("4111111111111111")); // Visa
-        assertFalse(cardService.isBrandMaster("6222000000000000")); // Invalid BIN
+        assertFalse(cardService.isBrandMaster("4111111111111111"));
+        assertFalse(cardService.isBrandMaster("6222000000000000"));
     }
 
     @Test
@@ -48,9 +48,9 @@ class cardServiceTest {
 
     @Test
     public void isBrandVisa_InvalidVisaCard() {
-        assertFalse(cardService.isBrandVisa("5111111111111111")); // MasterCard
-        assertFalse(cardService.isBrandVisa("3111111111111")); // Invalid prefix
-        assertFalse(cardService.isBrandVisa("411111111111")); // Invalid length
+        assertFalse(cardService.isBrandVisa("5111111111111111"));
+        assertFalse(cardService.isBrandVisa("3111111111111"));
+        assertFalse(cardService.isBrandVisa("411111111111"));
     }
 
     @Test

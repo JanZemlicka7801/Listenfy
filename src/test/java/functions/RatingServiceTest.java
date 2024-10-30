@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class RatingServiceTest {
     private RatingDao ratingDao;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
 
     @BeforeEach
     public void setUp() {
