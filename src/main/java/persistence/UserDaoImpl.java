@@ -10,10 +10,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class UserDaoImpl extends MySQLDao implements UserDao {
+
+    /**
+     * Creates UserDaoImpl with specified database properties.
+     *
+     * @param dbName Database properties filename
+     */
     public UserDaoImpl(String dbName) {
         super(dbName);
     }
 
+    /**
+     * Creates UserDaoImpl with default database properties.
+     */
     public UserDaoImpl() {
         super();
     }
@@ -23,6 +32,16 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         return null;
     }
 
+    /**
+     * Authenticates user login attempt.
+     *
+     * @param username Username to check
+     * @param password Password to verify
+     * @return User object if login successful, null otherwise
+     * @throws SQLException If database error occurs
+     * @throws NoSuchAlgorithmException If hashing algorithm not found
+     * @throws InvalidKeySpecException If password hashing fails
+     */
     @Override
     public User login(String username, String password) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection conn = null;
@@ -65,6 +84,16 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         return user;
     }
 
+    /**
+     * Registers a new user in the system.
+     * Checks for duplicate username/email and hashes password before storage.
+     *
+     * @param user User object containing registration details
+     * @return true if registration successful
+     * @throws SQLException If database error occurs
+     * @throws NoSuchAlgorithmException If hashing algorithm not found
+     * @throws InvalidKeySpecException If password hashing fails
+     */
     @Override
     public boolean register(User user) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection conn = null;
