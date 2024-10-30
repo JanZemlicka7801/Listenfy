@@ -31,16 +31,10 @@ public class MainMenu {
                     handleArtistMenu();
                     break;
                 case "2":
-
-                    break;
                 case "3":
-
-                    break;
                 case "4":
-
-                    break;
                 case "5":
-
+                    System.out.println("Feature under development...");
                     break;
                 case "6":
                     running = false;
@@ -49,7 +43,8 @@ public class MainMenu {
                     scanner.nextLine();
                     break;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Invalid option.");
+                    break;
             }
         }
     }
