@@ -96,6 +96,68 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+    /**
+     * Searches for songs by a specific artist.
+     *
+     * @param artistFirstName the first name of the artist, can be null if the artist has only one name
+     * @param artistLastName the last name of the artist
+     * @return a list of songs by the specified artist
+     * @auther Seb
+     */
+    @Override
+    public List<Song> searchSongsByArtist(String artistFirstName, String artistLastName) {
+        List<Song> songs = new ArrayList<>();
+        String query;
+
+        if (artistFirstName == null || artistFirstName.isEmpty()) {
+            // Query for artists with only a last name
+            query = "SELECT s.song_id, s.album_id, s.song_title, s.duration " +
+                    "FROM songs s " +
+                    "JOIN albums a ON s.album_id = a.album_id " +
+                    "JOIN artists ar ON a.artist_id = ar.artist_id " +
+                    "WHERE ar.artist_first_name IS NULL AND ar.artist_last_name = ?";
+        } else {
+            // Query for artists with both first and last names
+            query = "SELECT s.song_id, s.album_id, s.song_title, s.duration " +
+                    "FROM songs s " +
+                    "JOIN albums a ON s.album_id = a.album_id " +
+                    "JOIN artists ar ON a.artist_id = ar.artist_id " +
+                    "WHERE ar.artist_first_name = ? AND ar.artist_last_name = ?";
+        }
+
+        Connection conn = super.getConnection();
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            if (artistFirstName == null || artistFirstName.isEmpty()) {
+                ps.setString(1, artistLastName);
+            } else {
+                ps.setString(1, artistFirstName);
+                ps.setString(2, artistLastName);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Song song = new Song();
+                    song.setSongId(rs.getInt("song_id"));
+                    song.setAlbumId(rs.getInt("album_id"));
+                    song.setSongTitle(rs.getString("song_title"));
+                    song.setDuration(rs.getTime("duration"));
+                    songs.add(song);
+                }
+            } catch (SQLException e) {
+                System.out.println(LocalDateTime.now() + ": SQLException occurred while executing the query or processing the result set.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println(LocalDateTime.now() + ": SQLException occurred while preparing the SQL statement.");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return songs;
+    }
+
     public static void main(String[] args) {
         SongDao s = new SongDaoImpl("database.properties");
         System.out.println(s.getAllSongsByAlbumId(1));

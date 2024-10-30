@@ -164,12 +164,29 @@ public class MainMenu {
     private void searchForSong(){
         while (true){
             System.out.println("\n=== SEARCH MENU ===");
-            System.out.println("1. Rate a song");
-            System.out.println("2. View your rated songs");
-            System.out.println("3. View top-rated song");
-            System.out.println("4. View most popular song");
-            System.out.println("5. Return to main menu");
+            System.out.println("1. Rate for song via Title");
+            System.out.println("2. Rate for song via Artist");
+            System.out.println("3. Rate for song via Album");
+            System.out.println("4. Return to main menu");
             System.out.print("\nEnter your choice: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    DaoExtentions.searchForSongViaTitle();
+                    break;
+                case "2":
+
+                    break;
+                case "3":
+
+                    break;
+                case "4":
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
         }
     }
 }
