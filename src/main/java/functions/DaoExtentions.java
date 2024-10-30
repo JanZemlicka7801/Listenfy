@@ -78,7 +78,7 @@ public class DaoExtentions {
             System.out.println("Album titled \"" + albumTitle + "\" not found.");
         }
     }
-    public static void searchForSongViaTitle(){
+    public static void searchForSongViaTitle() {
         SongDao songDao = new SongDaoImpl("database.properties");
         Scanner sc = new Scanner(System.in);
 
@@ -89,17 +89,17 @@ public class DaoExtentions {
             System.out.println("Title cannot be empty. Please enter a valid title.");
             return;
         }
-        List<Song> songs = songDao.getSongsByTitle(title);
 
-        if (songs.isEmpty()) {
-            System.out.println("No songs found with the title: " + title);
+        // Using the modified `getSongByTitle` method that returns a single Song object
+        Song song = songDao.getSongByTitle(title);
+
+        if (song == null) {
+            System.out.println("No song found with the title: " + title);
         } else {
-            System.out.println("Songs found with the title '" + title + "':");
-            for (Song song : songs) {
-                System.out.println("Song ID: " + song.getSongId() +
-                        ", Title: " + song.getSongTitle() +
-                        ", Duration: " + song.getDuration());
-            }
+            System.out.println("Song found with the title '" + title + "':");
+            System.out.println("Song ID: " + song.getSongId() +
+                    ", Title: " + song.getSongTitle() +
+                    ", Duration: " + song.getDuration());
         }
     }
 }

@@ -62,9 +62,9 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
      * @return
      */
     @Override
-    public List<Song> getSongsByTitle(String title) {
-        List<Song> songs = new ArrayList<>();
+    public Song getSongByTitle(String title) {
         String query = "SELECT * FROM songs WHERE song_title LIKE ?";
+        Song song = null;
 
         try (Connection conn = super.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -72,14 +72,13 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
             ps.setString(1, "%" + title + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Song song = new Song(
+                if (rs.next()) {
+                    song = new Song(
                             rs.getInt("song_id"),
                             rs.getInt("album_id"),
                             rs.getString("song_title"),
                             rs.getTime("duration")
                     );
-                    songs.add(song);
                 }
             } catch (SQLException e) {
                 System.out.println(LocalDateTime.now() + ": SQLException occurred while processing the results.");
@@ -93,7 +92,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
             e.printStackTrace();
         }
 
-        return songs;
+        return song;
     }
 
     /**
