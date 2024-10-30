@@ -12,11 +12,6 @@ public class MainMenu {
         this.currentUser = user;
         this.scanner = scanner;
         scanner.nextLine();
-
-        ArtistDao artistDao = new ArtistDaoImpl("database.properties");
-        AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
-        SongDao songDao = new SongDaoImpl("database.properties");
-        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
     }
 
     public void displayMenu() {
