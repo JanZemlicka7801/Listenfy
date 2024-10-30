@@ -10,6 +10,7 @@ public class cardService {
      *
      * @param creditCard The credit card number as a String either with or without spaces.
      * @return true if the card is either Mastercard or Visa card.
+     * @auther Jan Zemlicka
      */
     public static boolean cardRegister(String creditCard) {
         String sanitizedCard = creditCard.replaceAll("\\s+", "");
@@ -28,6 +29,7 @@ public class cardService {
      *
      * @param number A credit card number as a String.
      * @return true if the card is valid Mastercard.
+     * @auther Jan Zemlicka
      */
     public static boolean isBrandMaster(final String number) {
         return number != null && number.length() == 16 && (number.matches("5[1-5][0-9]{14}") || isValidMasterBin(number));
@@ -38,6 +40,7 @@ public class cardService {
      *
      * @param number A credit card number as a String.
      * @return true if the card is valid Visa.
+     * @auther Jan Zemlicka
      */
     public static boolean isBrandVisa(final String number) {
         if (number == null || number.length() == 0 || (!number.startsWith("4")) || (number.length() != 13 && number.length() != 16)) {
@@ -52,6 +55,7 @@ public class cardService {
      *
      * @param number The credit card number as a String.
      * @return true if the first six digits are within the valid Mastercard range.
+     * @auther Jan Zemlicka
      */
     public static boolean isValidMasterBin(String number) {
         if (number.length() < 6) {
@@ -71,6 +75,7 @@ public class cardService {
      *
      * @param number A credit card number as a String.
      * @return true if the number is valid according to the Luhn algorithm.
+     * @auther Jan Zemlicka
      */
     public static boolean isValidLuhn(String number) {
         int sum = 0;

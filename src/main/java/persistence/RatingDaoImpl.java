@@ -12,13 +12,14 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
     public RatingDaoImpl(String dbName) {super(dbName);}
 
     /**
+     * Rates a song by a user, or updates the rating if it already exists.
      *
-     *
-     * @param userId
-     * @param songId
-     * @param rating
-     * @return
-     * @throws SQLException
+     * @param userId the ID of the user
+     * @param songId the ID of the song
+     * @param rating the rating given by the user, must be between 1 and 5
+     * @return true if the rating was successfully inserted/updated, false otherwise
+     * @throws SQLException if a database access error occurs
+     * @auther Jan Zemlicka
      */
     @Override
     public boolean rateSong(int userId, int songId, int rating) throws SQLException {
@@ -44,6 +45,14 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
         }
     }
 
+    /**
+     * Retrieves a list of songs rated by a specified user.
+     *
+     * @param userId the ID of the user
+     * @return a list of strings containing song titles and ratings, or an empty list if no ratings are found
+     * @throws SQLException if a database access error occurs
+     * @auther Jan Zemlicka
+     */
     @Override
     public List<String> viewRatedSongs(int userId) throws SQLException {
         List<String> ratedSongs = new ArrayList<>();
@@ -67,6 +76,13 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
         return ratedSongs;
     }
 
+    /**
+     * Retrieves the top-rated song based on average rating.
+     *
+     * @return a string with the top-rated song and its average rating, or a message if no ratings exist
+     * @throws SQLException if a database access error occurs
+     * @auther Jan Zemlicka
+     */
     @Override
     public String getTopRatedSong() throws SQLException {
         String query = "SELECT s.song_title, AVG(r.rating) as avg_rating FROM Songs s "
@@ -95,6 +111,13 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
         return "No ratings found.";
     }
 
+    /**
+     * Retrieves the most popular song based on the number of playlists it appears in.
+     *
+     * @return a string with the most popular song and the count of playlists, or a message if no data exists
+     * @throws SQLException if a database access error occurs
+     * @auther Jan Zemlicka
+     */
     @Override
     public String getTheMostPopularSong() throws SQLException {
         String query = "SELECT s.song_title, COUNT(ps.playlist_id) as playlist_count FROM Songs s "
