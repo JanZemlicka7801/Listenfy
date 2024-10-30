@@ -9,6 +9,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Extentions {
 
@@ -91,8 +92,26 @@ public class Extentions {
         System.out.print("Enter a password: ");
         String password = sc.nextLine().trim();
 
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+        if (!Pattern.matches(passwordPattern, password)) {
+            System.out.println("Invalid password format. Please enter a valid password.\n" +
+                    "At least one uppercase letter\n" +
+                    "At least one lowercase letter\n" +
+                    "At least one digit\n" +
+                    "At least one special character (e.g., @,$,#,%, etc.)\n" +
+                    "A minimum length of 8 characters");
+            return;
+        }
         System.out.print("Enter an email: ");
         String email = sc.nextLine().trim();
+
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+
+        if (!Pattern.matches(emailPattern, email)) {
+            System.out.println("Invalid email format. Please enter a valid email.");
+            return;
+        }
 
         System.out.print("Enter your credit card number: ");
         String creditCard = sc.nextLine().trim();
