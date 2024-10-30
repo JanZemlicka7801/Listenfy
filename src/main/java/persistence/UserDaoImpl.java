@@ -109,6 +109,8 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
 
             return stmt.executeUpdate() > 0;
 
+            // catching exceptions when user tries to insert a duplicate or trying to insert a
+            // foreign key value that doesn't exist or violating a check constraint on a column
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("A user with this email or username already exists.");
             return false;
