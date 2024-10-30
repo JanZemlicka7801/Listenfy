@@ -10,7 +10,7 @@ public class MainMenu {
     private final RatingDao ratingDao = new RatingDaoImpl("database.properties");
     private final ArtistDao artistDao = new ArtistDaoImpl("database.properties");
     private final AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
-    private final SongDao songDao = new SongDaoImpl("database.properties")
+    private final SongDao songDao = new SongDaoImpl("database.properties");
     private final PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
 
     public MainMenu(User user, Scanner scanner) {
