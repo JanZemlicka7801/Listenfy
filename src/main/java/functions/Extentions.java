@@ -9,6 +9,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Extentions {
 
@@ -91,12 +92,29 @@ public class Extentions {
         System.out.print("Enter a password: ");
         String password = sc.nextLine().trim();
 
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+        if (!Pattern.matches(passwordPattern, password)) {
+            System.out.println("Invalid password format. Please enter a valid password.\n" +
+                    "At least one uppercase letter\n" +
+                    "At least one lowercase letter\n" +
+                    "At least one digit\n" +
+                    "At least one special character (e.g., @,$,#,%, etc.)\n" +
+                    "A minimum length of 8 characters");
+            return;
+        }
         System.out.print("Enter an email: ");
         String email = sc.nextLine().trim();
 
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+
+        if (!Pattern.matches(emailPattern, email)) {
+            System.out.println("Invalid email format. Please enter a valid email.");
+            return;
+        }
+
         System.out.print("Enter your credit card number: ");
         String creditCard = sc.nextLine().trim();
-
 
         if (!cardService.cardRegister(creditCard)) {
             System.out.println("Invalid credit card. Registration failed.");
@@ -110,13 +128,23 @@ public class Extentions {
             if (success) {
                 System.out.println("Registration successful! You can now log in.");
             } else {
-                System.out.println("Registration failed.");
+                System.out.println("Registration failed. Username or email may already be in use.");
             }
         } catch (SQLException e) {
-            System.out.println("An error occurred during registration.");
-            e.printStackTrace();
+            if (e.getMessage().contains("Duplicate entry")) {
+                if (e.getMessage().contains("username")) {
+                    System.out.println("Registration failed. Username already exists. Please choose a different username.");
+                } else if (e.getMessage().contains("email")) {
+                    System.out.println("Registration failed. Email already exists. Please use a different email.");
+                } else {
+                    System.out.println("Registration failed due to a duplicate entry.");
+                }
+            } else {
+                System.out.println("An error occurred during registration. Please try again.");
+                e.printStackTrace();
+            }
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("An error occurred with password encryption", e);
         }
     }
 }
