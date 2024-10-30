@@ -17,7 +17,6 @@ public class MainMenu {
         AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
         SongDao songDao = new SongDaoImpl("database.properties");
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
-
     }
 
     public void displayMenu() {
