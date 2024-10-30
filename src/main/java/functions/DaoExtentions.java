@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DaoExtentions {
+    /**
+     * Prints all artists in the library.
+     * @auther Seb Mathews-Lynch
+     */
     public static void viewAllArtists() {
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
         try {
@@ -23,6 +27,11 @@ public class DaoExtentions {
             System.out.println("Error fetching artists: " + e.getMessage());
         }
     }
+
+    /**
+     * Gets and displays all albums for a specified artist.
+     * @auther Seb Mathews-Lynch
+     */
     public static void getAlbumsFromArtist(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter artist's first name (leave blank if single name or just has band name): ");
@@ -46,6 +55,10 @@ public class DaoExtentions {
             }
         }
     }
+    /**
+     * Prompts user for an album title and lists all songs in that album.
+     * @auther Seb Mathews-Lynch
+     */
     public static void viewAllSongsInAlbum(){
         Scanner scanner = new Scanner(System.in);
         AlbumsDao albumDao = new AlbumDaoImpl("database.properties");
@@ -83,6 +96,10 @@ public class DaoExtentions {
             System.out.println("Album titled \"" + albumTitle + "\" not found.");
         }
     }
+    /**
+     * Searches and displays information about a song by its title.
+     * @auther Seb Mathews-Lynch
+     */
     public static void searchForSongViaTitle() {
         SongDao songDao = new SongDaoImpl("database.properties");
         Scanner sc = new Scanner(System.in);
@@ -106,6 +123,10 @@ public class DaoExtentions {
                     ", Duration: " + song.getDuration());
         }
     }
+    /**
+     * Searches for songs in a specified album and displays them.
+     * @auther Seb Mathews-Lynch
+     */
     public static void searchForSongsViaAlbum() {
         SongDao songDao = new SongDaoImpl("database.properties");
         AlbumsDao albumDao = new AlbumDaoImpl("database.properties");
@@ -138,7 +159,10 @@ public class DaoExtentions {
             }
         }
     }
-
+    /**
+     * Searches for and lists songs by a specified artist.
+     * @auther Seb Mathews-Lynch
+     */
     public static void searchSongsViaArtists(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter artist's first name (leave blank if the artist has a single or band name): ");
