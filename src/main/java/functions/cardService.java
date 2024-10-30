@@ -7,11 +7,9 @@ public class cardService {
 
     public static boolean cardRegister(String creditCard) {
         String sanitizedCard = creditCard.replaceAll("\\s+", "");
-        System.out.println("Sanitized card number: " + sanitizedCard);
 
         boolean isVisa = isBrandVisa(sanitizedCard);
         boolean isMaster = isBrandMaster(sanitizedCard);
-        System.out.println("Is Visa: " + isVisa + ", Is MasterCard: " + isMaster);
 
         return isVisa || isMaster;
     }
