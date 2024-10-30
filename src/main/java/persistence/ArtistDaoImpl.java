@@ -57,6 +57,7 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
         return artists;
     }
     public static void main(String[] args) {
+        //for testing
         try {
             ArtistDao ad = new ArtistDaoImpl("database.properties");
 

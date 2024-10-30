@@ -20,8 +20,11 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
     }
 
     /**
-     * @param albumId
-     * @return
+     * Retrieves a list of songs associated with a specified album ID.
+     *
+     * @param albumId the ID of the album for which to retrieve songs
+     * @return a list of Song objects belonging to the specified album, or an empty list if no songs are found
+     * @auther Seb Mathews-Lynch
      */
     @Override
     public List<Song> getAllSongsByAlbumId(int albumId) {
@@ -58,8 +61,11 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
     }
 
     /**
-     * @param title
-     * @return
+     * Retrieves a song by searching for a title or partial title match.
+     *
+     * @param title the title or partial title of the song to search for
+     * @return the Songs object with the matching title, or null if no match is found
+     * @auther Seb Mathews-Lynch
      */
     @Override
     public Song getSongByTitle(String title) {
@@ -101,7 +107,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
      * @param artistFirstName the first name of the artist, can be null if the artist has only one name
      * @param artistLastName the last name of the artist
      * @return a list of songs by the specified artist
-     * @auther Seb
+     * @auther Seb Mathews-Lynch
      */
     @Override
     public List<Song> searchSongsByArtist(String artistFirstName, String artistLastName) {
