@@ -2,6 +2,7 @@ package functions;
 
 import business.Albums;
 import business.Artist;
+import business.Song;
 import persistence.*;
 
 import java.sql.SQLException;
@@ -39,5 +40,44 @@ public class daoExtentions {
             System.out.println("Title: " + album.getAlbum_title() +
                     ", Release Year: " + album.getRelease_year());
         }
+    }
+    public static void viewAllSongInAlbum(){
+        Scanner scanner = new Scanner(System.in);
+        AlbumDaoImpl albumDao = new AlbumDaoImpl("database.properties");
+        SongDao songDao = new SongDaoImpl("database.properties");
+
+        String albumTitle;
+
+        while (true) {
+            System.out.print("Enter album title (alphabetic characters only): ");
+            albumTitle = scanner.nextLine().trim();
+
+            if (albumTitle.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter alphabetic characters only.");
+            }
+        }
+        int albumId = albumDao.getAlbumIdByAlbumTitle(albumTitle);
+
+        if (albumId != -1) {
+            System.out.println("Album ID for \"" + albumTitle + "\": " + albumId);
+
+            List<Song> songs = songDao.getAllSongsByAlbumId(albumId);
+
+            if (!songs.isEmpty()) {
+                System.out.println("\nSongs in album \"" + albumTitle + "\":");
+                for (Song song : songs) {
+                    System.out.println("Title: " + song.getSongTitle() +
+                            ", Duration: " + song.getDuration());
+                }
+            } else {
+                System.out.println("No songs found in the album \"" + albumTitle + "\".");
+            }
+        } else {
+            System.out.println("Album titled \"" + albumTitle + "\" not found.");
+        }
+
+        scanner.close();
     }
 }
