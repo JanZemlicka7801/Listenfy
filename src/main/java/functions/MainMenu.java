@@ -1,208 +1,79 @@
+
 package functions;
 
 import business.User;
-import persistence.*;
 import java.util.Scanner;
 
 public class MainMenu {
     private final Scanner scanner;
     private final User currentUser;
-    private final DaoExtensions daoExtensions;
 
     public MainMenu(User user, Scanner scanner) {
         this.currentUser = user;
         this.scanner = scanner;
-
-        ArtistDao artistDao = new ArtistDaoImpl("database.properties");
-        AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
-        SongDao songDao = new SongDaoImpl("database.properties");
-        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
-
-        this.daoExtensions = new DaoExtensions(scanner, artistDao, albumsDao, songDao, playlistDao);
     }
 
     public void displayMenu() {
         boolean running = true;
         while (running) {
             System.out.println("\n=== LISTENFY MAIN MENU ===");
-            System.out.println("1. View all artists");
-            System.out.println("2. View artist albums");
-            System.out.println("3. View album songs");
-            System.out.println("4. Search songs");
-            System.out.println("5. Playlist Management");
-            System.out.println("6. Song Ratings");
-            System.out.println("7. Logout");
+            System.out.println("1. Artists");
+            System.out.println("2. Albums");
+            System.out.println("3. Songs");
+            System.out.println("4. Playlists");
+            System.out.println("5. Account");
+            System.out.println("6. Logout");
             System.out.print("\nEnter your choice: ");
 
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1":
-                    daoExtensions.viewAllArtists();
+                    handleArtistMenu();
                     break;
                 case "2":
-                    System.out.print("Enter artist ID: ");
-                    try {
-                        int artistId = Integer.parseInt(scanner.nextLine().trim());
-                        daoExtensions.viewArtistAlbums(artistId);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid artist ID format.");
-                    }
-                    break;
                 case "3":
-                    System.out.print("Enter album ID: ");
-                    try {
-                        int albumId = Integer.parseInt(scanner.nextLine().trim());
-                        daoExtensions.viewAlbumSongs(albumId);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid album ID format.");
-                    }
-                    break;
                 case "4":
-                    System.out.print("Enter search term (song/artist/album): ");
-                    String searchTerm = scanner.nextLine().trim();
-                    if (!searchTerm.isEmpty()) {
-                        daoExtensions.searchSongs(searchTerm);
-                    }
-                    break;
                 case "5":
-                    handlePlaylistMenu();
+                    System.out.println("Feature under development...");
                     break;
                 case "6":
-                    handleRatingsMenu();
-                    break;
-                case "7":
                     running = false;
                     System.out.println("Logging out...");
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-
-            if (running) {
-                System.out.println("\nPress Enter to continue...");
-                scanner.nextLine();
-            }
-        }
-    }
-
-    private void handlePlaylistMenu() {
-        while (true) {
-            System.out.println("\n=== PLAYLIST MANAGEMENT ===");
-            System.out.println("1. Create new playlist");
-            System.out.println("2. View all playlists");
-            System.out.println("3. View playlist contents");
-            System.out.println("4. Edit playlist");
-            System.out.println("5. Return to main menu");
-            System.out.print("\nEnter your choice: ");
-
-            String choice = scanner.nextLine().trim();
-
-            switch (choice) {
-                case "1":
-                    System.out.print("Enter playlist name: ");
-                    String name = scanner.nextLine().trim();
-                    System.out.print("Make playlist public? (y/n): ");
-                    boolean isPublic = scanner.nextLine().trim().toLowerCase().startsWith("y");
-                    daoExtensions.createPlaylist(currentUser.getUserId(), name, isPublic);
-                    break;
-                case "2":
-                    daoExtensions.viewAllPlaylists(currentUser.getUserId());
-                    break;
-                case "3":
-                    System.out.print("Enter playlist ID: ");
-                    try {
-                        int playlistId = Integer.parseInt(scanner.nextLine().trim());
-                        daoExtensions.viewPlaylistContents(playlistId, currentUser.getUserId());
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid playlist ID format.");
-                    }
-                    break;
-                case "4":
-                    handleEditPlaylistMenu();
-                    break;
-                case "5":
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-        }
-    }
-
-    private void handleEditPlaylistMenu() {
-        System.out.println("\n=== EDIT PLAYLIST ===");
-        System.out.println("1. Add song");
-        System.out.println("2. Remove song");
-        System.out.println("3. Rename playlist");
-        System.out.print("\nEnter your choice: ");
-
-        String choice = scanner.nextLine().trim();
-        System.out.print("Enter playlist ID: ");
-        try {
-            int playlistId = Integer.parseInt(scanner.nextLine().trim());
-
-            switch (choice) {
-                case "1":
-                    System.out.print("Enter song ID to add: ");
-                    int songId = Integer.parseInt(scanner.nextLine().trim());
-                    daoExtensions.addSongToPlaylist(playlistId, songId, currentUser.getUserId());
-                    break;
-                case "2":
-                    System.out.print("Enter song ID to remove: ");
-                    songId = Integer.parseInt(scanner.nextLine().trim());
-                    daoExtensions.removeSongFromPlaylist(playlistId, songId, currentUser.getUserId());
-                    break;
-                case "3":
-                    System.out.print("Enter new name: ");
-                    String newName = scanner.nextLine().trim();
-                    daoExtensions.renamePlaylist(playlistId, newName, currentUser.getUserId());
+                    System.out.println("Press Enter to return to login menu...");
+                    scanner.nextLine();
                     break;
                 default:
                     System.out.println("Invalid option.");
+                    break;
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid ID format.");
         }
     }
 
-    private void handleRatingsMenu() {
+    private void handleArtistMenu() {
         while (true) {
-            System.out.println("\n=== SONG RATINGS ===");
-            System.out.println("1. Rate a song");
-            System.out.println("2. View your rated songs");
-            System.out.println("3. View top-rated song");
-            System.out.println("4. View most popular song");
-            System.out.println("5. Return to main menu");
+            System.out.println("\n=== ARTIST MENU ===");
+            System.out.println("1. View all artists");
+            System.out.println("2. Search artists");
+            System.out.println("3. View artist albums");
+            System.out.println("4. Return to main menu");
             System.out.print("\nEnter your choice: ");
 
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1":
-                    System.out.print("Enter song ID: ");
-                    try {
-                        int songId = Integer.parseInt(scanner.nextLine().trim());
-                        System.out.print("Enter rating (1-5): ");
-                        int rating = Integer.parseInt(scanner.nextLine().trim());
-                        if (rating >= 1 && rating <= 5) {
-                            daoExtensions.rateSong(currentUser.getUserId(), songId, rating);
-                        } else {
-                            System.out.println("Rating must be between 1 and 5.");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid input format.");
-                    }
+                    System.out.println("Viewing all artists...");
                     break;
                 case "2":
-                    daoExtensions.viewUserRatedSongs(currentUser.getUserId());
+                    System.out.print("Enter artist name to search: ");
+                    String searchTerm = scanner.nextLine().trim();
                     break;
                 case "3":
-                    daoExtensions.viewTopRatedSong();
+                    System.out.print("Enter artist ID: ");
+                    String artistId = scanner.nextLine().trim();
                     break;
                 case "4":
-                    daoExtensions.viewMostPopularSong();
-                    break;
-                case "5":
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
