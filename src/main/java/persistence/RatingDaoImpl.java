@@ -42,9 +42,6 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
             return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
         }
     }
 
