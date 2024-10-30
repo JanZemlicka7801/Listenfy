@@ -157,6 +157,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+
     public static void main(String[] args) {
         SongDao s = new SongDaoImpl("database.properties");
         System.out.println(s.getAllSongsByAlbumId(1));
