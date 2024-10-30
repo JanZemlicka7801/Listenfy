@@ -31,6 +31,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
 
         Connection conn = super.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, albumId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Song song = new Song(
@@ -54,5 +55,10 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         }
 
         return songs;
+    }
+
+    public static void main(String[] args) {
+        SongDao s = new SongDaoImpl("database.properties");
+        System.out.println(s.getAllSongsByAlbumId(2));
     }
 }
