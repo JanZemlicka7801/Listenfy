@@ -92,7 +92,7 @@ public class Extentions {
         System.out.print("Enter a password: ");
         String password = sc.nextLine().trim();
 
-        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$#!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
         if (!Pattern.matches(passwordPattern, password)) {
             System.out.println("Invalid password format. Please enter a valid password.\n" +
