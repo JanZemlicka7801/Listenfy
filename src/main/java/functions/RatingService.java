@@ -1,37 +1,53 @@
 package functions;
 
+import business.Song;
+import business.User;
 import persistence.RatingDao;
+import persistence.SongDao;
 
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Scanner;
 
-public class RatingService {
-    private final RatingDao ratingDao;
+public class RatingService extends MainMenu{
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public RatingService(RatingDao ratingDao) {
-        this.ratingDao = ratingDao;
+    public RatingService(User user, Scanner scanner) {
+        super(user, scanner);
     }
 
-    public void rateSong(int userId, int songId, int rating) {
+    public static void rateSong(int userId, RatingDao ratingDao, SongDao songDao) {
+        System.out.print("Enter song name: ");
+        String songName = scanner.nextLine().trim();
+
+        Song song;
+        song = songDao.getSongByTitle(songName);
+        if (song.getSongId() == -1) {
+            System.out.println("Song not found. Please enter a valid song name.");
+            return;
+        }
+
+        System.out.print("Enter rating (1-5): ");
+        int rating = Integer.parseInt(scanner.nextLine().trim());
+
         try {
-            if(rating < 1 || rating > 5) {
+            if (rating < 1 || rating > 5) {
                 System.out.println("Rating must be between 1 and 5.");
                 return;
             }
-            if (ratingDao.rateSong(userId, songId, rating)) {
+            if (ratingDao.rateSong(userId, song.getSongId(), rating)) {
                 System.out.println("Rating submitted successfully.");
+            } else {
+                System.out.println("Failed to submit rating.");
             }
         } catch (SQLException e) {
             System.out.println("An error occurred while rating the song.");
-            e.printStackTrace();
         }
     }
 
-    public void viewRatedSongs(int userId) {
+    public static void viewRatedSongs(int userId, RatingDao ratingDao) {
         try {
             List<String> ratedSongs = ratingDao.viewRatedSongs(userId);
-
             if (ratedSongs.isEmpty()) {
                 System.out.println("You haven't rated any songs.");
             } else {
@@ -45,23 +61,21 @@ public class RatingService {
         }
     }
 
-    public void getTopRatedSong() {
+    public static void viewTopRatedSong(RatingDao ratingDao) {
         try {
-            String result = ratingDao.getTopRatedSong();
-            System.out.println(result);
+            String topRatedSong = ratingDao.getTopRatedSong();
+            System.out.println(topRatedSong != null ? topRatedSong : "No ratings found.");
         } catch (SQLException e) {
-            System.out.println("An error occurred while fetching the top-rated song.");
-            e.printStackTrace();
+            System.out.println("Could not fetch the top-rated song.");
         }
     }
 
-    public void getMostPopularSong() {
+    public static void viewMostPopularSong(RatingDao ratingDao) {
         try {
-            String result = ratingDao.getTheMostPopularSong();
-            System.out.println(result);
+            String mostPopularSong = ratingDao.getTheMostPopularSong();
+            System.out.println(mostPopularSong != null ? mostPopularSong : "No popular song found.");
         } catch (SQLException e) {
-            System.out.println("An error occurred while fetching the most popular song.");
-            e.printStackTrace();
+            System.out.println("Could not fetch the most popular song.");
         }
     }
 }

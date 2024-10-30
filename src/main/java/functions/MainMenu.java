@@ -7,6 +7,11 @@ import java.util.Scanner;
 public class MainMenu {
     private final Scanner scanner;
     private final User currentUser;
+    private final RatingDao ratingDao = new RatingDaoImpl("database.properties");
+    private final ArtistDao artistDao = new ArtistDaoImpl("database.properties");
+    private final AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
+    private final SongDao songDao = new SongDaoImpl("database.properties");
+    private final PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
 
     public MainMenu(User user, Scanner scanner) {
         this.currentUser = user;
@@ -50,7 +55,7 @@ public class MainMenu {
                     DaoExtentions.viewAllSongsInAlbum();
                     break;
                 case "4":
-                    searchForSong();
+                    //TODO Later
                     break;
                 case "5":
                     handlePlaylistMenu();
@@ -179,9 +184,9 @@ public class MainMenu {
     private void searchForSong(){
         while (true){
             System.out.println("\n=== SEARCH MENU ===");
-            System.out.println("1. Search for song via Title");
-            System.out.println("2. Search for song via Artist");
-            System.out.println("3. Search for song via Album");
+            System.out.println("1. Rate for song via Title");
+            System.out.println("2. Rate for song via Artist");
+            System.out.println("3. Rate for song via Album");
             System.out.println("4. Return to main menu");
             System.out.print("\nEnter your choice: ");
 
@@ -192,10 +197,10 @@ public class MainMenu {
                     DaoExtentions.searchForSongViaTitle();
                     break;
                 case "2":
-                    DaoExtentions.searchSongsViaArtists();
+
                     break;
                 case "3":
-                    DaoExtentions.searchForSongsViaAlbum();
+
                     break;
                 case "4":
                     return;
