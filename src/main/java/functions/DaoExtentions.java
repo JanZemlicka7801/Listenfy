@@ -2,6 +2,7 @@ package functions;
 
 import business.Albums;
 import business.Artist;
+import business.Playlist;
 import business.Song;
 import persistence.*;
 
@@ -90,7 +91,6 @@ public class DaoExtentions {
             return;
         }
 
-        // Using the modified `getSongByTitle` method that returns a single Song object
         Song song = songDao.getSongByTitle(title);
 
         if (song == null) {
@@ -102,4 +102,181 @@ public class DaoExtentions {
                     ", Duration: " + song.getDuration());
         }
     }
+
+    public static void createPlaylist(int userId, String name, boolean isPublic) {
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        try {
+            if (playlistDao.createPlaylist(userId, name, isPublic)) {
+                System.out.println("Playlist created successfully.");
+            } else {
+                System.out.println("Failed to create playlist.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error creating playlist: " + e.getMessage());
+        }
+    }
+
+    public static void viewAllPlaylists(int userId) {
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        try {
+            List<Playlist> userPlaylists = playlistDao.getUserPlaylists(userId);
+            List<Playlist> publicPlaylists = playlistDao.getPublicPlaylists();
+
+            System.out.println("\n=== Your Playlists ===");
+            if (userPlaylists.isEmpty()) {
+                System.out.println("You haven't created any playlists yet.");
+            } else {
+                System.out.printf("%-5s %-30s %-10s%n", "ID", "Name", "Public");
+                System.out.println("─".repeat(50));
+                for (Playlist playlist : userPlaylists) {
+                    System.out.printf("%-5d %-30s %-10s%n",
+                            playlist.getPlaylist_id(),
+                            playlist.getPlaylist_name(),
+                            playlist.is_public() ? "Yes" : "No"
+                    );
+                }
+            }
+
+            System.out.println("\n=== Public Playlists ===");
+            if (publicPlaylists.isEmpty()) {
+                System.out.println("No public playlists available.");
+            } else {
+                System.out.printf("%-5s %-30s%n", "ID", "Name");
+                System.out.println("─".repeat(40));
+                for (Playlist playlist : publicPlaylists) {
+                    if (playlist.getUser_id() != userId) {
+                        System.out.printf("%-5d %-30s%n",
+                                playlist.getPlaylist_id(),
+                                playlist.getPlaylist_name()
+                        );
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting playlists: " + e.getMessage());
+        }
+    }
+
+
+    public static void viewPlaylistContents(String playlistName, int userId) {
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        try {
+            Playlist playlist = playlistDao.getPlaylistByName(playlistName);
+            if (playlist == null) {
+                System.out.println("Playlist not found.");
+                return;
+            }
+
+            if (!playlistDao.canUserAccessPlaylist(playlist.getPlaylist_id(), userId)) {
+                System.out.println("You don't have permission to view this playlist.");
+                return;
+            }
+
+            List<Song> songs = playlistDao.getPlaylistSongs(playlist.getPlaylist_id());
+            if (songs.isEmpty()) {
+                System.out.println("This playlist is empty.");
+                return;
+            }
+
+            System.out.printf("\n=== Songs in %s ===\n", playlist.getPlaylist_name());
+            System.out.printf("%-30s %s%n", "Song Title", "Duration");
+            System.out.println("─".repeat(50));
+
+            for (Song song : songs) {
+                System.out.printf("%-30s %s%n",
+                        song.getSongTitle(),
+                        song.getDuration()
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Error viewing playlist: " + e.getMessage());
+        }
+    }
+
+    public static void addSongToPlaylist(String playlistName, String songTitle, int userId) {
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        SongDao songDao = new SongDaoImpl("database.properties");
+        try {
+            Playlist playlist = playlistDao.getPlaylistByName(playlistName);
+            if (playlist == null) {
+                System.out.println("Playlist not found.");
+                return;
+            }
+
+            if (!playlistDao.isPlaylistOwner(playlist.getPlaylist_id(), userId)) {
+                System.out.println("You can only modify your own playlists.");
+                return;
+            }
+
+            Song song = songDao.getSongByTitle(songTitle);
+            if (song == null) {
+                System.out.println("Song not found.");
+                return;
+            }
+
+            if (playlistDao.addSongToPlaylist(playlist.getPlaylist_id(), song.getSongId())) {
+                System.out.println("Song added to playlist successfully.");
+            } else {
+                System.out.println("Failed to add song to playlist.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error adding song to playlist: " + e.getMessage());
+        }
+    }
+
+    public static void removeSongFromPlaylist(String playlistName, String songTitle, int userId) {
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        SongDao songDao = new SongDaoImpl("database.properties");
+        try {
+            Playlist playlist = playlistDao.getPlaylistByName(playlistName);
+            if (playlist == null) {
+                System.out.println("Playlist not found.");
+                return;
+            }
+
+            if (!playlistDao.isPlaylistOwner(playlist.getPlaylist_id(), userId)) {
+                System.out.println("You can only modify your own playlists.");
+                return;
+            }
+
+            Song song = songDao.getSongByTitle(songTitle);
+            if (song == null) {
+                System.out.println("Song not found.");
+                return;
+            }
+
+            if (playlistDao.removeSongFromPlaylist(playlist.getPlaylist_id(), song.getSongId())) {
+                System.out.println("Song removed from playlist successfully.");
+            } else {
+                System.out.println("Failed to remove song from playlist.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error removing song from playlist: " + e.getMessage());
+        }
+    }
+
+    public static void renamePlaylist(String oldName, String newName, int userId) {
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        try {
+            Playlist playlist = playlistDao.getPlaylistByName(oldName);
+            if (playlist == null) {
+                System.out.println("Playlist not found.");
+                return;
+            }
+
+            if (!playlistDao.isPlaylistOwner(playlist.getPlaylist_id(), userId)) {
+                System.out.println("You can only rename your own playlists.");
+                return;
+            }
+
+            if (playlistDao.renamePlaylist(playlist.getPlaylist_id(), newName)) {
+                System.out.println("Playlist renamed successfully.");
+            } else {
+                System.out.println("Failed to rename playlist.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error renaming playlist: " + e.getMessage());
+        }
+    }
+
 }
