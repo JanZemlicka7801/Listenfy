@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-public class daoExtentions {
+public class DaoExtentions {
     public static void viewAllArtists() {
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
         try {
@@ -41,7 +41,7 @@ public class daoExtentions {
                     ", Release Year: " + album.getRelease_year());
         }
     }
-    public static void viewAllSongInAlbum(){
+    public static void viewAllSongsInAlbum(){
         Scanner scanner = new Scanner(System.in);
         AlbumDaoImpl albumDao = new AlbumDaoImpl("database.properties");
         SongDao songDao = new SongDaoImpl("database.properties");
