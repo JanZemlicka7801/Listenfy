@@ -87,14 +87,19 @@ public class MainMenu {
 
             switch (choice) {
                 case "1":
-
+                    System.out.print("Enter playlist name: ");
+                    String name = scanner.nextLine().trim();
+                    System.out.print("Make playlist public? (y/n): ");
+                    boolean isPublic = scanner.nextLine().trim().toLowerCase().startsWith("y");
+                    DaoExtentions.createPlaylist(currentUser.getUserId(), name, isPublic);
                     break;
                 case "2":
-
+                    DaoExtentions.viewAllPlaylists(currentUser.getUserId());
                     break;
                 case "3":
-                    System.out.print("Enter playlist ID: ");
-
+                    System.out.print("Enter playlist name: ");
+                    String playlistName = scanner.nextLine().trim();
+                    DaoExtentions.viewPlaylistContents(playlistName, currentUser.getUserId());
                     break;
                 case "4":
                     handleEditPlaylistMenu();
@@ -115,18 +120,28 @@ public class MainMenu {
         System.out.print("\nEnter your choice: ");
 
         String choice = scanner.nextLine().trim();
-            switch (choice) {
-                case "1":
+        System.out.print("Enter playlist name: ");
+        String playlistName = scanner.nextLine().trim();
 
-                    break;
-                case "2":
-
-                    break;
-                case "3":
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-            }
+        switch (choice) {
+            case "1":
+                System.out.print("Enter song title: ");
+                String songTitle = scanner.nextLine().trim();
+                DaoExtentions.addSongToPlaylist(playlistName, songTitle, currentUser.getUserId());
+                break;
+            case "2":
+                System.out.print("Enter song title: ");
+                songTitle = scanner.nextLine().trim();
+                DaoExtentions.removeSongFromPlaylist(playlistName, songTitle, currentUser.getUserId());
+                break;
+            case "3":
+                System.out.print("Enter new name: ");
+                String newName = scanner.nextLine().trim();
+                DaoExtentions.renamePlaylist(playlistName, newName, currentUser.getUserId());
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
     }
 
     private void handleRatingsMenu() {
