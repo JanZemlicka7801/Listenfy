@@ -22,26 +22,25 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
      */
     @Override
     public boolean rateSong(int userId, int songId, int rating) throws SQLException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Rating must be between 1 and 5.");
+        }
 
-        try {
-            conn = getConnection();
-            if (conn == null) {
-                throw new SQLException("Unable to connect to the database!");
-            }
-            String query = "INSERT INTO Ratings (user_id, song_id, rating) VALUES (?, ?, ?) "
-                    + "ON DUPLICATE KEY UPDATE rating = ?";
-            stmt = conn.prepareStatement(query);
+        if (userId <= 0 || songId <= 0) {
+            throw new IllegalArgumentException("User ID and Song ID must be positive integers.");
+        }
 
-            stmt.setInt(1, userId);
-            stmt.setInt(2, songId);
-            stmt.setInt(3, rating);
-            stmt.setInt(4, rating);
-            stmt.executeUpdate();
+        String query = "INSERT INTO Ratings (user_id, song_id, rating) VALUES (?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE rating = ?";
+        try (Connection conn = super.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+            ps.setInt(2, songId);
+            ps.setInt(3, rating);
+            ps.setInt(4, rating);
+            ps.executeUpdate();
             return true;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
