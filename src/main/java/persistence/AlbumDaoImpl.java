@@ -78,4 +78,10 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
         }
         return albumsList;
     }
+
+    public static void main(String[] args) {
+        AlbumsDao ab = new AlbumDaoImpl("database.properties");
+        String n = null;
+        System.out.println(ab.getAlbumsByArtistName(n,"OneRepublic"));
+    }
 }
