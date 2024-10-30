@@ -50,7 +50,7 @@ public class MainMenu {
                     DaoExtentions.viewAllSongsInAlbum();
                     break;
                 case "4":
-                    //TODO Later
+                    searchForSong();
                     break;
                 case "5":
                     handlePlaylistMenu();
@@ -179,9 +179,9 @@ public class MainMenu {
     private void searchForSong(){
         while (true){
             System.out.println("\n=== SEARCH MENU ===");
-            System.out.println("1. Rate for song via Title");
-            System.out.println("2. Rate for song via Artist");
-            System.out.println("3. Rate for song via Album");
+            System.out.println("1. Search for song via Title");
+            System.out.println("2. Search for song via Artist");
+            System.out.println("3. Search for song via Album");
             System.out.println("4. Return to main menu");
             System.out.print("\nEnter your choice: ");
 
@@ -192,10 +192,10 @@ public class MainMenu {
                     DaoExtentions.searchForSongViaTitle();
                     break;
                 case "2":
-
+                    DaoExtentions.searchSongsViaArtists();
                     break;
                 case "3":
-
+                    DaoExtentions.searchForSongsViaAlbum();
                     break;
                 case "4":
                     return;

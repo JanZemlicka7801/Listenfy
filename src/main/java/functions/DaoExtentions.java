@@ -33,13 +33,17 @@ public class DaoExtentions {
         System.out.print("Enter artist's last name: ");
         String lastName = sc.nextLine().trim();
 
-        AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
+        AlbumDaoImpl albumsDao = new AlbumDaoImpl("database.properties");
 
         List<Albums> albums = albumsDao.getAlbumsByArtistName(firstName, lastName);
 
-        for (Albums album : albums) {
-            System.out.println("Title: " + album.getAlbum_title() +
-                    ", Release Year: " + album.getRelease_year());
+        if (albums.isEmpty()) {
+            System.out.println("No albums found for the specified artist.");
+        } else {
+            for (Albums album : albums) {
+                System.out.println("Title: " + album.getAlbum_title() +
+                        ", Release Year: " + album.getRelease_year());
+            }
         }
     }
     public static void viewAllSongsInAlbum(){
@@ -102,7 +106,7 @@ public class DaoExtentions {
                     ", Duration: " + song.getDuration());
         }
     }
-    public static void searchForSongsByAlbum() {
+    public static void searchForSongsViaAlbum() {
         SongDao songDao = new SongDaoImpl("database.properties");
         AlbumsDao albumDao = new AlbumDaoImpl("database.properties");
         Scanner sc = new Scanner(System.in);
@@ -130,6 +134,33 @@ public class DaoExtentions {
             for (Song song : songs) {
                 System.out.println("Song ID: " + song.getSongId() +
                         ", Title: " + song.getSongTitle() +
+                        ", Duration: " + song.getDuration());
+            }
+        }
+    }
+
+    public static void searchSongsViaArtists(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter artist's first name (leave blank if the artist has a single or band name): ");
+        String firstName = sc.nextLine().trim();
+        if (firstName.isEmpty()) {
+            firstName = null;
+        }
+
+        System.out.print("Enter artist's last name: ");
+        String lastName = sc.nextLine().trim();
+
+        SongDao songDao = new SongDaoImpl("database.properties");
+
+        List<Song> songs = songDao.searchSongsByArtist(firstName, lastName);
+
+        if (songs.isEmpty()) {
+            System.out.println("No songs found for the specified artist.");
+        } else {
+            System.out.println("Songs by " + (firstName != null ? firstName + " " : "") + lastName + ":");
+            for (Song song : songs) {
+                System.out.println("Title: " + song.getSongTitle() +
+                        ", Album ID: " + song.getAlbumId() +
                         ", Duration: " + song.getDuration());
             }
         }
