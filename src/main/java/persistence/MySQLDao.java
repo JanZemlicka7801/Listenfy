@@ -12,7 +12,8 @@ public class MySQLDao {
     private Properties properties = new Properties();
     private String databaseName = "listenify";
 
-    public MySQLDao() {}
+    public MySQLDao() {
+    }
 
     public MySQLDao(String propFilename) {
         try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(propFilename)) {
