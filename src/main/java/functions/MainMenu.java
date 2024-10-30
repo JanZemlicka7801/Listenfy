@@ -11,6 +11,7 @@ public class MainMenu {
     public MainMenu(User user, Scanner scanner) {
         this.currentUser = user;
         this.scanner = scanner;
+        scanner.nextLine();
 
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
         AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
@@ -32,6 +33,10 @@ public class MainMenu {
             System.out.print("\nEnter your choice: ");
 
             String choice = scanner.nextLine().trim();
+
+            if (choice.isEmpty()) {
+                continue;
+            }
 
             switch (choice) {
                 case "1":
