@@ -190,6 +190,14 @@ public class DaoExtentions {
         }
     }
 
+    /**
+     * Creates a new playlist for a user.
+     *
+     * @param userId The ID of the user creating the playlist
+     * @param name The name of the playlist
+     * @param isPublic True if the playlist should be public, false if private
+     * @author Malikom12
+     */
     public static void createPlaylist(int userId, String name, boolean isPublic) {
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
         try {
@@ -203,6 +211,12 @@ public class DaoExtentions {
         }
     }
 
+    /**
+     * Displays all playlists accessible to a user - their own playlists and public playlists.
+     *
+     * @param userId The ID of the user viewing the playlists
+     * @author Malikom12
+     */
     public static void viewAllPlaylists(int userId) {
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
         try {
@@ -244,7 +258,13 @@ public class DaoExtentions {
         }
     }
 
-
+    /**
+     * Shows all songs in a specified playlist if the user has access to view it.
+     *
+     * @param playlistName The name of the playlist to view
+     * @param userId The ID of the user trying to view the playlist
+     * @author Malikom12
+     */
     public static void viewPlaylistContents(String playlistName, int userId) {
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
         try {
@@ -280,6 +300,14 @@ public class DaoExtentions {
         }
     }
 
+    /**
+     * Adds a song to a playlist if the user owns the playlist.
+     *
+     * @param playlistName The name of the playlist to add to
+     * @param songTitle The title of the song to add
+     * @param userId The ID of the user trying to add the song
+     * @author Malikom12
+     */
     public static void addSongToPlaylist(String playlistName, String songTitle, int userId) {
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
         SongDao songDao = new SongDaoImpl("database.properties");
@@ -311,6 +339,15 @@ public class DaoExtentions {
         }
     }
 
+
+    /**
+     * Removes a song from a playlist if the user owns the playlist.
+     *
+     * @param playlistName The name of the playlist to remove from
+     * @param songTitle The title of the song to remove
+     * @param userId The ID of the user trying to remove the song
+     * @author Malikom12
+     */
     public static void removeSongFromPlaylist(String playlistName, String songTitle, int userId) {
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
         SongDao songDao = new SongDaoImpl("database.properties");
@@ -342,6 +379,14 @@ public class DaoExtentions {
         }
     }
 
+    /**
+     * Renames a playlist if the user owns it.
+     *
+     * @param oldName Current name of the playlist
+     * @param newName New name for the playlist
+     * @param userId The ID of the user trying to rename the playlist
+     * @author Malikom12
+     */
     public static void renamePlaylist(String oldName, String newName, int userId) {
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
         try {
