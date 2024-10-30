@@ -2,17 +2,15 @@ package functions;
 
 import business.Albums;
 import business.Artist;
-import persistence.AlbumDaoImpl;
-import persistence.AlbumsDao;
-import persistence.ArtistDao;
-import persistence.ArtistDaoImpl;
+import persistence.*;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class daoExtentions {
-    public static void viewAllArtists(ArtistDao artistDao) {
+    public static void viewAllArtists() {
+        ArtistDao artistDao = new ArtistDaoImpl("database.properties");
         try {
             List<Artist> artists = artistDao.getAllArtists();
             System.out.println("Artists in the Library:");
