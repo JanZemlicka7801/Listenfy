@@ -7,17 +7,16 @@ import java.util.Scanner;
 public class MainMenu {
     private final Scanner scanner;
     private final User currentUser;
+    private final RatingDao ratingDao = new RatingDaoImpl("database.properties");
+    private final ArtistDao artistDao = new ArtistDaoImpl("database.properties");
+    private final AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
+    private final SongDao songDao = new SongDaoImpl("database.properties");
+    private final PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
 
     public MainMenu(User user, Scanner scanner) {
         this.currentUser = user;
         this.scanner = scanner;
         scanner.nextLine();
-
-        ArtistDao artistDao = new ArtistDaoImpl("database.properties");
-        AlbumsDao albumsDao = new AlbumDaoImpl("database.properties");
-        SongDao songDao = new SongDaoImpl("database.properties");
-        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
-
     }
 
     public void displayMenu() {
@@ -158,16 +157,16 @@ public class MainMenu {
 
             switch (choice) {
                 case "1":
-
+                    RatingService.rateSong(currentUser.getUserId(), this.ratingDao, this.songDao);
                     break;
                 case "2":
-
+                    RatingService.viewRatedSongs(currentUser.getUserId(), this.ratingDao);
                     break;
                 case "3":
-
+                    RatingService.viewTopRatedSong(this.ratingDao);
                     break;
                 case "4":
-
+                    RatingService.viewMostPopularSong(this.ratingDao);
                     break;
                 case "5":
                     return;
@@ -176,6 +175,7 @@ public class MainMenu {
             }
         }
     }
+
     private void searchForSong(){
         while (true){
             System.out.println("\n=== SEARCH MENU ===");
