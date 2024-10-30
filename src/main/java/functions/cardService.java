@@ -6,7 +6,8 @@ import java.util.List;
 public class cardService {
 
     public static boolean cardRegister(String creditCard){
-        return (isBrandVisa(creditCard) || isBrandMaster(creditCard));
+        String sanitizeInput = creditCard.replaceAll("\\s+","");
+        return (isBrandVisa(sanitizeInput) || isBrandMaster(sanitizeInput));
     }
 
     public static List<String> MASTERCARD_NEW_RANGE = Arrays.asList("222100","272099");
